@@ -1,0 +1,17 @@
+<h2>Latest Movies</h2>
+
+<div *ngFor="let movie of movies" class="card">
+
+  <img [src]="movie.imageUrl" width="120">
+
+  <div>
+    <h3>{{movie.title}}</h3>
+    <p>Year: {{movie.year}}</p>
+    <p>Director: {{movie.directors}}</p>
+
+  <a [routerLink]="['/details', movie.id]">
+  View Details
+</a>
+  </div>
+
+</div>

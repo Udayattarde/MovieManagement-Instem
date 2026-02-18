@@ -1,0 +1,21 @@
+<h2>Search Results</h2>
+
+<div *ngIf="movies.length===0">
+  No movies found
+</div>
+
+<div *ngFor="let m of movies" style="border:1px solid #ccc;margin:10px;padding:10px">
+ <img [src]="m.imageUrl" width="120"
+  height="160"
+  (error)="m.imageUrl = 'assets/No_Poster_Img.png'"
+ >
+  <h3>{{m.title}}</h3>
+  <p>Year: {{m.year}}</p>
+  <p>Genre: {{m.genres}}</p>
+
+  <a [routerLink]="['/details',m.id]">
+    View Details
+  </a>
+
+</div>
+
