@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace MovieManagement.Application.Commands
 {
-    internal class DeleteMovieCommand
+    public class DeleteMovieCommand
     {
+        public int Id { get; set; }
     }
 }

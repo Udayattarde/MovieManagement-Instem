@@ -26,9 +26,11 @@ export class SearchResultsComponent implements OnInit {
       const criteria = params['criteria'];
       const value = params['value'];
       
-      console.log('Searching for:', criteria, 'with value:', value); // For debugging
-      this.movies = this.movieService.searchMovies(criteria, value);
-      console.log('Results:', this.movies); // For debugging
+      console.log('Searching for:', criteria, 'with value:', value); 
+      //this.movies = this.movieService.searchMovies(criteria, value);
+      this.movieService.searchMovies(criteria, value)
+  .subscribe(res => this.movies = res);
+      console.log('Results:', this.movies); 
     });
   }
 }
