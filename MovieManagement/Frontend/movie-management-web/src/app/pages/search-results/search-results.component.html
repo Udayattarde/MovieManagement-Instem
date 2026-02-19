@@ -1,6 +1,16 @@
 <h2>Search Results</h2>
 
-<div *ngIf="movies.length===0">
+<ngx-loading
+  [show]="loading"
+  [config]="{
+    backdropBorderRadius: '3px',
+    fullScreenBackdrop: true,
+    primaryColour: '#ffffff',
+    backdropBackgroundColour: 'rgba(0,0,0,0.6)'
+  }">
+</ngx-loading>
+
+<div *ngIf=" !loading &&  movies.length===0">
   No movies found
 </div>
 
