@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace MovieManagement.Application.Queries
 {
-    internal class GetMovieByIdQuery
+    public class GetMovieByIdQuery
     {
+        public int Id { get; set; }
     }
 }

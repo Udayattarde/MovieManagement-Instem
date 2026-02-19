@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace MovieManagement.Application.Interfaces
 {
-    internal interface IMovieRepository
+    public interface IMovieRepository
     {
+        Task AddAsync(Movie movie);
+        Task<Movie?> GetByIdAsync(int id);
+        Task SaveChangesAsync();
+        Task<List<Movie>> GetAllAsync();
+        Task DeleteAsync(Movie movie);
     }
 }

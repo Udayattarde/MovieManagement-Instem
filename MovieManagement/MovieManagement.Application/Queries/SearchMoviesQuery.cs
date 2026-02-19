@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace MovieManagement.Application.Queries
 {
-    internal class SearchMoviesQuery
+    public class SearchMoviesQuery
     {
+        public string Criteria { get; set; } = "";
+        public string Value { get; set; } = "";
     }
 }

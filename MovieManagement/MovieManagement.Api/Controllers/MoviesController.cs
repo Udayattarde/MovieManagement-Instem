@@ -1,35 +1,58 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using MovieManagement.Infrastructure.Data;
+using MovieManagement.Application.Commands;
+using MovieManagement.Application.Interfaces;
+using MovieManagement.Application.Queries;
 
 [ApiController]
 [Route("api/[controller]")]
 public class MoviesController : ControllerBase
 {
-    private readonly MovieDbContext _context;
+    private readonly ICommandHandler<CreateMovieCommand> _create;
+    private readonly ICommandHandler<UpdateMovieCommand> _update;
+    private readonly ICommandHandler<DeleteMovieCommand> _delete;
+    private readonly IQueryHandler<GetLatestMoviesQuery, List<Movie>> _getAll;
+    private readonly IQueryHandler<GetMovieByIdQuery, Movie?> _getById;
 
-    public MoviesController(MovieDbContext context)
+    public MoviesController(
+        ICommandHandler<CreateMovieCommand> create,
+        ICommandHandler<UpdateMovieCommand> update,
+        ICommandHandler<DeleteMovieCommand> delete,
+        IQueryHandler<GetLatestMoviesQuery, List<Movie>> getAll,
+        IQueryHandler<GetMovieByIdQuery, Movie?> getById)
     {
-        _context = context;
+        _create = create;
+        _update = update;
+        _delete = delete;
+        _getAll = getAll;
+        _getById = getById;
     }
 
-    // GET: api/movies
+    [HttpPost]
+    public async Task<IActionResult> Create(CreateMovieCommand cmd)
+    {
+        await _create.HandleAsync(cmd);
+        return Ok();
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> Update(UpdateMovieCommand cmd)
+    {
+        await _update.HandleAsync(cmd);
+        return Ok();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        await _delete.HandleAsync(new DeleteMovieCommand { Id = id });
+        return NoContent();
+    }
+
     [HttpGet]
     public async Task<IActionResult> GetAll()
-    {
-        var movies = await _context.Movies.ToListAsync();
-        return Ok(movies);
-    }
+        => Ok(await _getAll.HandleAsync(new GetLatestMoviesQuery()));
 
-    // GET: api/movies/5
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
-    {
-        var movie = await _context.Movies.FindAsync(id);
-
-        if (movie == null)
-            return NotFound();
-
-        return Ok(movie);
-    }
+        => Ok(await _getById.HandleAsync(new GetMovieByIdQuery { Id = id }));
 }

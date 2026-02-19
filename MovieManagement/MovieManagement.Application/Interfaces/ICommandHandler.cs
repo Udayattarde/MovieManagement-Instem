@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace MovieManagement.Application.Interfaces
 {
-    internal interface ICommandHandler
+
+
+    public interface ICommandHandler<TCommand>
     {
+        Task HandleAsync(TCommand command);
     }
 }

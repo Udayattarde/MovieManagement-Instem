@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MovieManagement.Application.Queries
 {
-    internal class GetLatestMoviesQuery
+    public class GetLatestMoviesQuery
     {
     }
 }
