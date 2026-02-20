@@ -32,10 +32,10 @@ export class SearchResultsComponent implements OnInit {
       
       console.log('Searching for:', criteria, 'with value:', value); 
       //this.movies = this.movieService.searchMovies(criteria, value);
-     this.movieService.searchMovies(criteria, value)
+     this.movieService.searchMoviesPaged(criteria, value)
         .subscribe({
           next: res => {
-            this.movies = res;
+            this.movies = res.items;
             this.loading = false; 
           },
           error: () => this.loading = false

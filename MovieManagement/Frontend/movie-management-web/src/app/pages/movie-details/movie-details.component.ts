@@ -86,7 +86,7 @@ export class MovieDetailsComponent implements OnInit {
           this.router.navigate(['/']);
         },
         error: () => {
-          this.snackBar.open('Delete failed','Close',{duration:3000});
+          this.snackBar.open('Delete failed','Close',{duration:3000,verticalPosition:'top', horizontalPosition:'right'});
         }
       });
     }
