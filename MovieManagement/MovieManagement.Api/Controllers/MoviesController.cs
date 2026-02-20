@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MovieManagement.Application.Commands;
+using MovieManagement.Application.DTOs;
 using MovieManagement.Application.Interfaces;
 using MovieManagement.Application.Queries;
 
@@ -12,19 +13,22 @@ public class MoviesController : ControllerBase
     private readonly ICommandHandler<DeleteMovieCommand> _delete;
     private readonly IQueryHandler<GetLatestMoviesQuery, List<Movie>> _getAll;
     private readonly IQueryHandler<GetMovieByIdQuery, Movie?> _getById;
+    private readonly IQueryHandler<SearchMoviesQuery, PagedResult<Movie>> _search;
 
     public MoviesController(
         ICommandHandler<CreateMovieCommand> create,
         ICommandHandler<UpdateMovieCommand> update,
         ICommandHandler<DeleteMovieCommand> delete,
         IQueryHandler<GetLatestMoviesQuery, List<Movie>> getAll,
-        IQueryHandler<GetMovieByIdQuery, Movie?> getById)
+        IQueryHandler<GetMovieByIdQuery, Movie?> getById,
+            IQueryHandler<SearchMoviesQuery, PagedResult<Movie>> search)
     {
         _create = create;
         _update = update;
         _delete = delete;
         _getAll = getAll;
         _getById = getById;
+        _search = search;
     }
 
     [HttpPost]
@@ -55,4 +59,21 @@ public class MoviesController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
         => Ok(await _getById.HandleAsync(new GetMovieByIdQuery { Id = id }));
+
+    [HttpGet("search")]
+    public async Task<IActionResult> Search([FromQuery] string criteria = "all", [FromQuery] string value = "",
+    [FromQuery] int pageNumber = 1,
+    [FromQuery] int pageSize = 4)
+    {
+        var result = await _search.HandleAsync(
+            new SearchMoviesQuery
+            {
+                Criteria = criteria,
+                Value = value,
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            });
+
+        return Ok(result);
+    }
 }

@@ -4,6 +4,7 @@ import { MovieService } from '../../services/movie.service';
 import { Movie } from '../../models/movie';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   standalone:true,
@@ -21,7 +22,8 @@ export class MovieDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private service: MovieService,
-    private router: Router) {}
+    private router: Router,
+   private snackBar: MatSnackBar) {}
 
   ngOnInit() {
 
@@ -38,27 +40,55 @@ export class MovieDetailsComponent implements OnInit {
   save(){
 
     if(!this.movie.title || !this.movie.genre || !this.movie.plot){
-      this.msg="All fields required";
+      //this.msg="All fields required";
+      this.snackBar.open('All fields required','Close',{
+      duration:3000
+    });
       return;
     }
 
-    this.service.update(this.movie)
-      .subscribe(()=>{
-        this.edit = false;
-        this.msg="Updated successfully";
-      });
-  }
+  this.service.update(this.movie)
+  .subscribe({
+    next: () => {
+      this.edit = false;
+      //this.msg="Updated successfully";
+      this.snackBar.open(
+        'Movie updated successfully',
+        'Close',
+        { duration:3000, verticalPosition:'top', horizontalPosition:'right'}
+      );
+    },
+    error: () => {
+      this.snackBar.open(
+        'Update failed',
+        'Close',
+        { duration:3000 }
+      );
+    }
+  });
+}
 
 
   deleteMovie(){
 
     if(confirm("Delete movie ?")){
 
-      this.service.delete(this.movie.id!)
-        .subscribe(()=>{
-          alert("Deleted ✅");
+    this.service.delete(this.movie.id!)
+      .subscribe({
+        next: () => {
+
+          this.snackBar.open(
+            'Movie deleted successfully',
+            'Close',
+            { duration:3000, verticalPosition:'top', horizontalPosition:'right'}
+          );
+
           this.router.navigate(['/']);
-        });
+        },
+        error: () => {
+          this.snackBar.open('Delete failed','Close',{duration:3000,verticalPosition:'top', horizontalPosition:'right'});
+        }
+      });
     }
   }
 }

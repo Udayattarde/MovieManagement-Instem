@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Movie } from '../models/movie';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
+import { PagedResult } from '../models/paged-result';
 
 @Injectable({
   providedIn: 'root'
@@ -12,65 +13,53 @@ export class MovieService {
 
   constructor(private http: HttpClient) { }
 
-  // ✅ Latest Movies (Home Page)
-  getLatestMovies(): Observable<Movie[]> {
-    return this.http.get<Movie[]>(this.apiUrl).pipe(
-      map(movies =>
-        movies
-          .sort((a, b) => b.year - a.year)
-          .slice(0, 4)
-      )
+
+  getLatestMoviesPaged(
+    page: number,
+    pageSize: number = 4
+  ): Observable<PagedResult<Movie>> {
+
+    return this.http.get<PagedResult<Movie>>(
+      `${this.apiUrl}/search`,
+      {
+        params: {
+          criteria: 'all',
+          value: '',
+          pageNumber: page,
+          pageSize: pageSize
+        }
+      }
     );
   }
 
-  // ✅ Get All Movies
-  getAll(): Observable<Movie[]> {
-    return this.http.get<Movie[]>(this.apiUrl);
-  }
+  searchMoviesPaged(
+    criteria: string,
+    value: string,
+    page: number = 1,
+    pageSize: number = 1000
+  ): Observable<PagedResult<Movie>> {
 
-  // ✅ Search Movies (using API data)
-  searchMovies(criteria: string, value: string): Observable<Movie[]> {
-
-    return this.http.get<Movie[]>(this.apiUrl).pipe(
-      map(allMovies => {
-
-        if (!value || !value.trim()) return [];
-
-        const searchValue = value.toLowerCase().trim();
-
-        return allMovies.filter(m => {
-
-          switch (criteria) {
-
-            case 'title':
-              return m.title.toLowerCase().includes(searchValue);
-
-            case 'genre':
-              return m.genre.toLowerCase().includes(searchValue);
-
-            case 'year':
-              return m.year.toString().includes(searchValue);
-
-            default:
-              return false;
-          }
-        });
-      })
+    return this.http.get<PagedResult<Movie>>(
+      `${this.apiUrl}/search`,
+      {
+        params: {
+          criteria: criteria,
+          value: value,
+          pageNumber: page,
+          pageSize: pageSize
+        }
+      }
     );
   }
 
-  // ✅ Get By Id
-  getById(id: number): Observable<Movie> {
+  getById(id: number) {
     return this.http.get<Movie>(`${this.apiUrl}/${id}`);
   }
 
-  // ✅ Update Movie
   update(movie: Movie) {
-    //return this.http.put(`${this.apiUrl}/${movie.id}`, movie);
-     return this.http.put(this.apiUrl, movie);
+    return this.http.put(this.apiUrl, movie);
   }
 
-  // ✅ Delete Movie
   delete(id: number) {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }

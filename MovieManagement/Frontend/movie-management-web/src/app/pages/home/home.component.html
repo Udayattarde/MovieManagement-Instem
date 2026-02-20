@@ -1,17 +1,97 @@
+<div style="margin-bottom:20px; text-align:center;">
+
+  <select [(ngModel)]="searchCriteria">
+    <option value="all">All</option>
+    <option value="title">Title</option>
+    <option value="genre">Genre</option>
+    <option value="year">Year</option>
+  </select>
+
+  <input
+    type="text"
+    [(ngModel)]="searchValue"
+    placeholder="Search movies..."
+    style="margin-left:10px; padding:6px; width:250px;"
+  />
+
+  <button (click)="searchMovies()" style="margin-left:10px;">
+    Search
+  </button>
+
+  <button (click)="clearSearch()" style="margin-left:5px;">
+    Clear
+  </button>
+
+</div>
+
 <h2>Latest Movies</h2>
 
-<div *ngFor="let movie of movies" class="card">
+<!-- Loader -->
+<ngx-loading
+  [show]="loading"
+  [config]="{
+    fullScreenBackdrop: true,
+    backdropBackgroundColour: 'rgba(0,0,0,0.6)'
+  }">
+</ngx-loading>
 
-  <img [src]="movie.imageUrl" width="120">
+<!-- MOVIE LIST -->
+<div style="display:flex; flex-wrap:wrap; gap:20px;">
 
-  <div>
+  <div *ngFor="let movie of movies"
+       style="width:23%; border:1px solid #ccc; padding:10px;">
+
+    <img [src]="movie.imageUrl"
+         width="100%"
+         height="220"
+         style="object-fit:cover"
+         (error)="movie.imageUrl='assets/No_Poster_Img.png'">
+
     <h3>{{movie.title}}</h3>
     <p>Year: {{movie.year}}</p>
     <p>Director: {{movie.director}}</p>
 
-  <a [routerLink]="['/details', movie.id]">
-  View Details
-</a>
+    <a [routerLink]="['/details', movie.id]">
+      View Details
+    </a>
+
   </div>
+
+</div>
+
+<!-- PAGINATION -->
+<div
+  *ngIf="totalPages > 1"
+  style="margin-top:25px; text-align:center; font-size:16px;">
+
+  <!-- Previous -->
+  <button
+    (click)="loadMovies(currentPage-1)"
+    [disabled]="currentPage === 1"
+    style="margin-right:12px; padding:4px 10px;">
+    Previous
+  </button>
+
+  <!-- Page Numbers -->
+  <button
+    *ngFor="let p of visiblePages"
+    (click)="loadMovies(p)"
+    [style.font-weight]="currentPage === p ? 'bold' : 'normal'"
+    style="
+      margin: 0 6px;
+      padding: 4px 10px;
+      font-size:16px;
+      cursor:pointer;
+    ">
+    {{p}}
+  </button>
+
+  <!-- Next -->
+  <button
+    (click)="loadMovies(currentPage+1)"
+    [disabled]="currentPage === totalPages"
+    style="margin-left:12px; padding:4px 10px;">
+    Next
+  </button>
 
 </div>

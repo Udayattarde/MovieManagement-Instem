@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MovieManagement.Application.CommandHandlers;
 using MovieManagement.Application.Commands;
+using MovieManagement.Application.DTOs;
 using MovieManagement.Application.Interfaces;
 using MovieManagement.Application.Queries;
 using MovieManagement.Application.QueryHandlers;
@@ -31,7 +33,7 @@ builder.Services.AddScoped<ICommandHandler<DeleteMovieCommand>, DeleteMovieComma
 // Queries
 builder.Services.AddScoped<IQueryHandler<GetLatestMoviesQuery, List<Movie>>, GetLatestMoviesQueryHandler>();
 builder.Services.AddScoped<IQueryHandler<GetMovieByIdQuery, Movie?>, GetMovieByIdQueryHandler>();
-builder.Services.AddScoped<IQueryHandler<SearchMoviesQuery, List<Movie>>, SearchMoviesQueryHandler>();
+builder.Services.AddScoped<IQueryHandler<SearchMoviesQuery, PagedResult<Movie>>,SearchMoviesQueryHandler>();
 
 builder.Services.AddCors(o =>
 {
