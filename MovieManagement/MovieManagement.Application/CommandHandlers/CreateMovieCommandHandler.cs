@@ -15,19 +15,20 @@ public class CreateMovieCommandHandler
 
     public async Task HandleAsync(CreateMovieCommand command)
     {
+
         var movie = new Movie
         {
-            Title = command.Title,
+            Title = command.Title.Trim(),
             Year = command.Year,
-            Director = command.Directors,
+            Director = command.Directors.Trim(),
             ReleaseDate = command.ReleaseDate,
             Rating = command.Rating,
-            Genre = command.Genres,
+            Genre = command.Genres.Trim(),
             ImageUrl = command.ImageUrl,
             Plot = command.Plot,
             Rank = command.Rank,
             RunningTimeSecs = command.RunningTimeSecs,
-            Actors = command.Actors
+            Actors = command.Actors.Trim()
         };
 
         await _repository.AddAsync(movie);

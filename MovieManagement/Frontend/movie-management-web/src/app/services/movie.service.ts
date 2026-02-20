@@ -52,6 +52,9 @@ export class MovieService {
     );
   }
 
+create(movie: Movie) {
+  return this.http.post(this.apiUrl, movie);
+}
   getById(id: number) {
     return this.http.get<Movie>(`${this.apiUrl}/${id}`);
   }

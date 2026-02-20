@@ -1,0 +1,10 @@
+:host ::ng-deep input.ng-invalid.ng-touched,
+:host ::ng-deep textarea.ng-invalid.ng-touched {
+  border: 2px solid red;
+  outline: none;
+}
+
+:host ::ng-deep div.ng-star-inserted {
+  color: red;
+  font-size: 13px;
+}

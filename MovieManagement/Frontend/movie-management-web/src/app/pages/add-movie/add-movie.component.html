@@ -1,0 +1,69 @@
+<h2>Add Movie</h2>
+
+<form [formGroup]="movieForm" (ngSubmit)="save()">
+
+  Title:
+  <input formControlName="title">
+  <div *ngIf="f.title.touched && f.title.errors?.['required']">
+    Title is required
+  </div>
+  <br><br>
+
+  Year:
+  <input type="number" formControlName="year">
+  <div *ngIf="f.year.touched && f.year.errors?.['required']">
+    Year is required
+  </div>
+  <br><br>
+
+  Director:
+  <input formControlName="directors">
+  <div *ngIf="f.directors.touched && f.directors.errors?.['required']">
+    Director is required
+  </div>
+  <br><br>
+
+  Genre:
+  <input formControlName="genres">
+  <div *ngIf="f.genres.touched && f.genres.errors?.['required']">
+    Genre is required
+  </div>
+  <br><br>
+
+  Rating:
+  <input type="number" formControlName="rating">
+  <div *ngIf="f.rating.touched && f.rating.errors?.['required']">
+    Rating is required
+  </div>
+  <br><br>
+
+  Release Date (yyyy-MM-dd):
+  <input formControlName="releaseDate">
+  <div *ngIf="f.releaseDate.touched && f.releaseDate.errors?.['required']">
+    Release date is required
+  </div>
+  <br><br>
+
+  Running Time:
+  <input type="number" formControlName="runningTimeSecs">
+  <div *ngIf="f.runningTimeSecs.touched && f.runningTimeSecs.errors?.['required']">
+    Running time is required
+  </div>
+  <br><br>
+
+  Actors:
+  <input formControlName="actors">
+  <div *ngIf="f.actors.touched && f.actors.errors?.['required']">
+    Actors are required
+  </div>
+  <br><br>
+
+  Image Url:
+  <input formControlName="imageUrl"><br><br>
+
+  Plot:
+  <textarea formControlName="plot"></textarea><br><br>
+
+  <button type="submit">Save</button>
+
+</form>
