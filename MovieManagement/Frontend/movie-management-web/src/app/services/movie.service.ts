@@ -59,7 +59,7 @@ create(movie: Movie) {
     return this.http.get<Movie>(`${this.apiUrl}/${id}`);
   }
 
-  update(movie: Movie) {
+  update(movie: any) {
     return this.http.put(this.apiUrl, movie);
   }
 

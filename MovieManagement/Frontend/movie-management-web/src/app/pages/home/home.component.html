@@ -60,9 +60,24 @@
 </div>
 
 <!-- PAGINATION -->
+<button
+  (click)="loadMovies(1)"
+  [disabled]="currentPage === 1"
+  style="margin-right:8px; padding:4px 10px;">
+  First
+</button>
+
+
 <div
   *ngIf="totalPages > 1"
   style="margin-top:25px; text-align:center; font-size:16px;">
+
+<button
+  (click)="loadMovies(1)"
+  [disabled]="currentPage === 1"
+  style="margin-right:8px; padding:4px 10px;">
+  First
+</button>
 
   <!-- Previous -->
   <button
@@ -86,12 +101,20 @@
     {{p}}
   </button>
 
-  <!-- Next -->
+  <!-- Next page  -->
   <button
     (click)="loadMovies(currentPage+1)"
     [disabled]="currentPage === totalPages"
     style="margin-left:12px; padding:4px 10px;">
     Next
   </button>
+
+  <!-- for Last page -->
+  <button
+  (click)="loadMovies(totalPages)"
+  [disabled]="currentPage === totalPages"
+  style="margin-left:8px; padding:4px 10px;">
+  Last
+</button>
 
 </div>

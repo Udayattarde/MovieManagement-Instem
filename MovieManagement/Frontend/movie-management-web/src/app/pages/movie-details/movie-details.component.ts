@@ -29,7 +29,6 @@ export class MovieDetailsComponent implements OnInit {
 
     const id = Number(this.route.snapshot.paramMap.get('id'));
 
-    // ✅ API CALL (ASYNC)
     this.service.getById(id)
       .subscribe(data => {
         this.movie = data;
@@ -47,31 +46,55 @@ export class MovieDetailsComponent implements OnInit {
       return;
     }
 
-  this.service.update(this.movie)
-  .subscribe({
-    next: () => {
-      this.edit = false;
-      //this.msg="Updated successfully";
-      this.snackBar.open(
-        'Movie updated successfully',
-        'Close',
-        { duration:3000, verticalPosition:'top', horizontalPosition:'right'}
-      );
-    },
-    error: () => {
-      this.snackBar.open(
-        'Update failed',
-        'Close',
-        { duration:3000 }
-      );
-    }
-  });
+      const updatePayload = {
+    id: this.movie.id,
+    title: this.movie.title,
+    genre: this.movie.genre,
+    rating: this.movie.rating,
+    plot: this.movie.plot
+  };
+  this.service.update(updatePayload)
+    .subscribe({
+      next: () => {
+
+        this.snackBar.open(
+          'Movie edited successfully',
+          'Close',
+          {
+            duration: 3000,
+            verticalPosition: 'top',
+            horizontalPosition: 'center'
+          }
+        );
+        this.edit=false;
+        this.router.navigate(['/details', this.movie.id]);
+
+      },
+      error: () => {
+        this.snackBar.open(
+          'Update failed',
+          'Close',
+          { duration: 3000,
+              verticalPosition: 'top',
+            horizontalPosition: 'center'
+          }
+        );
+      }
+    });
 }
+deleteMovie() {
 
+  const snackRef = this.snackBar.open(
+    'Are you sure you want to delete this movie?',
+    'DELETE',
+    {
+      duration: 5000,
+      verticalPosition: 'top',
+      horizontalPosition: 'center'
+    }
+  );
 
-  deleteMovie(){
-
-    if(confirm("Delete movie ?")){
+  snackRef.onAction().subscribe(() => {
 
     this.service.delete(this.movie.id!)
       .subscribe({
@@ -80,15 +103,43 @@ export class MovieDetailsComponent implements OnInit {
           this.snackBar.open(
             'Movie deleted successfully',
             'Close',
-            { duration:3000, verticalPosition:'top', horizontalPosition:'right'}
+            { duration: 3000, verticalPosition:'top', horizontalPosition:'right' }
           );
 
           this.router.navigate(['/']);
         },
         error: () => {
-          this.snackBar.open('Delete failed','Close',{duration:3000,verticalPosition:'top', horizontalPosition:'right'});
+          this.snackBar.open(
+            'Delete failed',
+            'Close',
+            { duration: 3000, verticalPosition:'top', horizontalPosition:'right' }
+          );
         }
       });
-    }
-  }
+
+  });
+}
+
+  // deleteMovie(){
+
+  //   if(confirm("Delete movie ?")){
+
+  //   this.service.delete(this.movie.id!)
+  //     .subscribe({
+  //       next: () => {
+
+  //         this.snackBar.open(
+  //           'Movie deleted successfully',
+  //           'Close',
+  //           { duration:3000, verticalPosition:'top', horizontalPosition:'right'}
+  //         );
+
+  //         this.router.navigate(['/']);
+  //       },
+  //       error: () => {
+  //         this.snackBar.open('Delete failed','Close',{duration:3000,verticalPosition:'top', horizontalPosition:'right'});
+  //       }
+  //     });
+  //   }
+  // }
 }
