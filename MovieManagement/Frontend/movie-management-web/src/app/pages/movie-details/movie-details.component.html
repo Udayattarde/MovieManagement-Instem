@@ -2,7 +2,14 @@
 
 <div *ngIf="movie && !edit">
 
-  <img [src]="movie.imageUrl" width="180">
+  <!-- <img [src]="movie.imageUrl" width="180"> -->
+
+<img
+  [src]="movie.imageUrl"
+  width="320"
+  height="220"
+  style="object-fit:contain;"
+  (error)="movie.imageUrl='assets/No_Poster_Img.png'">
 
   <p><b>Title:</b> {{movie.title}}</p>
   <p><b>Year:</b> {{movie.year}}</p>
@@ -18,8 +25,13 @@
 
   <br>
 
-  <button (click)="edit=true">Edit</button>
-  <button (click)="deleteMovie()">Delete</button>
+<button (click)="edit=true" style="font-size:20px; margin-right:10px;">
+  Edit
+</button>
+
+<button (click)="deleteMovie()" style="font-size:20px;">
+  Delete
+</button>
 
 </div>
 
@@ -45,8 +57,13 @@
 
   <br><br>
 
-  <button (click)="save()">Save</button>
-  <button (click)="edit=false">Cancel</button>
+<button (click)="save()" style="font-size:20px; margin-right:10px;">
+  Save
+</button>
+
+<button (click)="edit=false" style="font-size:20px;">
+  Cancel
+</button>
 
 </div>
 
