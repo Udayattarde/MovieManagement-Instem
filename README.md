@@ -1,84 +1,128 @@
-# MovieManagement-Instem
-Movie Management Application built with ASP.NET Core, Angular, and SQL. Implements clean architecture, RESTful API, full CRUD, advanced search, validation, and unit tests as part of a Senior Software Developer technical exercise.
-
-How to Run the Project (Local Setup)
-
-This application contains:
-
-ASP.NET Core Web API (Backend)
-
-Angular Application (Frontend)
-
-SQL Server Database (auto-created)
+A Movie Management system developed using ASP.NET Core and Angular that allows users to browse, search, create, update, and delete movies backed by a SQL Server database.
 
 
-How to Run the Project (Local Setup)
+Technology Stack
 
-This application contains:
+Backend
 
-ASP.NET Core Web API (Backend)
+ASP.NET Core (.NET 8)
 
-Angular Application (Frontend)
+Entity Framework Core
 
-SQL Server Database (auto-created)
+CQRS Pattern
 
-Run Backend (ASP.NET Core API)
+REST API
 
-Open terminal:
+Frontend
 
-cd MovieManagement/MovieManagement.Api
+Angular 17 (Standalone Components)
 
-Update connection string (if needed)
+TypeScript
 
-Open:
+Database
 
-appsettings.json
+SQL Server 
 
-Example:
 
-"ConnectionStrings": {
-  "DefaultConnection":
-  "Server=(localdb)\\MSSQLLocalDB;Database=MovieManagementDb;Trusted_Connection=True;TrustServerCertificate=True"
-}
+🚀 How to Run the Application
 
-Apply migrations:
+Prerequisites
 
-dotnet ef database update
+Install:
 
-Run API:
+.NET 8 SDK+
 
+Node.js (v18+)
+
+Angular CLI
+
+SQL Server LocalDB
+
+
+Run Backend
+
+The solution follows Clean Architecture where:
+
+• MovieManagement.Infrastructure contains DbContext and EF Core migrations  
+• MovieManagement.Api is the startup project
+
+From solution root run:
+
+dotnet ef database update --project MovieManagement.Infrastructure --startup-project MovieManagement.Api
+
+This will automatically create the database and seed initial movie data.
+
+Then start the API:
+
+cd MovieManagement.Api
 dotnet run
 
-Backend runs at:
+API runs at:
 
 https://localhost:7278
 
-Swagger:
 
-https://localhost:7278/swagger
-▶️ Run Frontend (Angular)
-
-Open new terminal:
+Run Frontend
 
 cd movie-management-web
-
-Install packages:
-
 npm install
-
-Run application:
-
 ng serve
 
-Frontend runs at:
-
-http://localhost:4200
-✅ Testing the Application
-
-Open browser:
+Application:
 
 http://localhost:4200
 
 
+Database
+
+Database is automatically created using EF Core migrations.
+
+Initial movie data is seeded from JSON file (moviedata.json).
+
+The database acts as the single source of truth after seeding.
+
+No manual database setup required.
 
 
+🏗️ Key Architectural Decisions
+
+CQRS Pattern used to separate read and write operations.
+
+Repository Pattern used for data access abstraction.
+
+Clean Architecture applied using separate Domain, Application, Infrastructure, and API layers to improve maintainability.
+
+Angular standalone components used to reduce module complexity.
+
+Backend validation ensures data consistency.
+
+
+⚖️ Assumptions & Trade-offs
+
+SQL Server used instead of PostgreSQL for easier local execution.
+
+Pagination implemented on frontend for simplicity.
+
+Focus prioritized on architecture and maintainability.
+
+
+✅ Features Implemented
+
+Movie CRUD operations
+
+Advanced search functionality
+
+Latest movies homepage
+
+Edit & delete from details page
+
+Validation (frontend + backend)
+
+Loader & user feedback
+
+
+📂 Repository
+
+GitHub:
+
+https://github.com/Udayattarde/MovieManagement-Instem
