@@ -29,7 +29,7 @@ public class Movie
 
     public int Rank { get; set; }
 
-    [JsonPropertyName("Running Time (secs)")]
+    //[JsonPropertyName("Running Time (secs)")]
     public int RunningTimeSecs { get; set; }
 
     public string Actors { get; set; } = "";

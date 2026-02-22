@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
 
   currentPage = 1;
   totalPages = 0;
-  pageSize = 4;
+  pageSize = 6;
   visiblePages: number[] = [];
 
   // ✅ SEARCH VARIABLES

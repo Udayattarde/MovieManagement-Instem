@@ -31,4 +31,8 @@ export class SearchComponent {
       }
     });
   }
+
+  gotToHome(){
+  this.router.navigate(["/"]);
+}
 }

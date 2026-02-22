@@ -76,4 +76,8 @@ export class AddMovieComponent {
 }
     });
 }
+
+gotToHome(){
+  this.router.navigate(["/"]);
+}
 }

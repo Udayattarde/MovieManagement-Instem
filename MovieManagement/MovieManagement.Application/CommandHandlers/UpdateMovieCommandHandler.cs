@@ -29,6 +29,8 @@ namespace MovieManagement.Application.CommandHandlers
             movie.Genre = cmd.Genre;
             movie.Rating = cmd.Rating;
             movie.Plot = cmd.Plot;
+            movie.Year = cmd.Year;
+            movie.Rank = cmd.Rank;
 
             await _repo.SaveChangesAsync();
         }

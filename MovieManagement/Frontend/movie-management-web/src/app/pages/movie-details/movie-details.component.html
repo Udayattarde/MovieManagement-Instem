@@ -21,7 +21,7 @@
   <p><b>Running Time (secs):</b> {{movie.runningTimeSecs}}</p>
   <p><b>Rank:</b> {{movie.rank}}</p>
 
-  <p><b>Plot:</b></p><p>{{movie.plot}}</p>
+  <p><b>Plot:</b>     {{movie.plot}}</p>
 
   <br>
 
@@ -29,8 +29,12 @@
   Edit
 </button>
 
-<button (click)="deleteMovie()" style="font-size:20px;">
+<button (click)="deleteMovie()" style="font-size:20px; margin-right:10px;">
   Delete
+</button>
+
+<button (click)="gotToHome()" style="font-size:20px;">
+  Back
 </button>
 
 </div>
@@ -49,6 +53,15 @@
 
   Rating:
   <input type="number" [(ngModel)]="movie.rating">
+
+    <br><br>
+
+  Rank:
+  <input type="number" [(ngModel)]="movie.rank">
+
+    <br><br>
+  Year:
+  <input type="number" [(ngModel)]="movie.year">
 
   <br><br>
 
