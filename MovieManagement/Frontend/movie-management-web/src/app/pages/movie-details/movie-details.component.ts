@@ -51,7 +51,9 @@ export class MovieDetailsComponent implements OnInit {
     title: this.movie.title,
     genre: this.movie.genre,
     rating: this.movie.rating,
-    plot: this.movie.plot
+    year: this.movie.year,
+    plot: this.movie.plot,
+    rank:this.movie.rank
   };
   this.service.update(updatePayload)
     .subscribe({
@@ -95,7 +97,6 @@ deleteMovie() {
   );
 
   snackRef.onAction().subscribe(() => {
-
     this.service.delete(this.movie.id!)
       .subscribe({
         next: () => {
@@ -120,6 +121,9 @@ deleteMovie() {
   });
 }
 
+gotToHome(){
+  this.router.navigate(["/"]);
+}
   // deleteMovie(){
 
   //   if(confirm("Delete movie ?")){

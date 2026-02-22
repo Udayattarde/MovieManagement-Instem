@@ -39,7 +39,7 @@
 <div style="display:flex; flex-wrap:wrap; gap:20px;">
 
   <div *ngFor="let movie of movies"
-       style="width:23%; border:1px solid #ccc; padding:10px;">
+       style="margin-left:10px;width:30%; border:1px solid #ccc; padding:10px;">
 
     <img [src]="movie.imageUrl"
          width="100%"
@@ -60,13 +60,6 @@
 </div>
 
 <!-- PAGINATION -->
-<button
-  (click)="loadMovies(1)"
-  [disabled]="currentPage === 1"
-  style="margin-right:8px; padding:4px 10px;">
-  First
-</button>
-
 
 <div
   *ngIf="totalPages > 1"
