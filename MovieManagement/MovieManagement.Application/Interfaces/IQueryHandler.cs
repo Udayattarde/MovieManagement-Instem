@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace MovieManagement.Application.Interfaces
 {
-    internal interface IQueryHandler
+    public interface IQueryHandler<TQuery, TResult>
     {
+        Task<TResult> HandleAsync(TQuery query);
     }
 }

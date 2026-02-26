@@ -1,1 +1,83 @@
-<app-movie-details></app-movie-details>
+<h2>Movie Details</h2>
+
+<div *ngIf="movie && !edit">
+
+  <!-- <img [src]="movie.imageUrl" width="180"> -->
+
+<img
+  [src]="movie.imageUrl"
+  width="320"
+  height="220"
+  style="object-fit:contain;"
+  (error)="movie.imageUrl='assets/No_Poster_Img.png'">
+
+  <p><b>Title:</b> {{movie.title}}</p>
+  <p><b>Year:</b> {{movie.year}}</p>
+  <p><b>Director:</b> {{movie.director}}</p>
+  <p><b>Release Date:</b> {{movie.releaseDate}}</p>
+  <p><b>Rating:</b> {{movie.rating}}</p>
+  <p><b>Genres:</b> {{movie.genre}}</p>
+  <p><b>Actors:</b> {{movie.actors}}</p>
+  <p><b>Running Time (secs):</b> {{movie.runningTimeSecs}}</p>
+  <p><b>Rank:</b> {{movie.rank}}</p>
+
+  <p><b>Plot:</b>     {{movie.plot}}</p>
+
+  <br>
+
+<button (click)="edit=true" style="font-size:20px; margin-right:10px;">
+  Edit
+</button>
+
+<button (click)="deleteMovie()" style="font-size:20px; margin-right:10px;">
+  Delete
+</button>
+
+<button (click)="gotToHome()" style="font-size:20px;">
+  Back
+</button>
+
+</div>
+
+<div *ngIf="edit">
+
+  Title:
+  <input [(ngModel)]="movie.title">
+
+  <br><br>
+
+  Genre:
+  <input [(ngModel)]="movie.genre">
+
+  <br><br>
+
+  Rating:
+  <input type="number" [(ngModel)]="movie.rating">
+
+    <br><br>
+
+  Rank:
+  <input type="number" [(ngModel)]="movie.rank">
+
+    <br><br>
+  Year:
+  <input type="number" [(ngModel)]="movie.year">
+
+  <br><br>
+
+  Plot:
+  <textarea [(ngModel)]="movie.plot"></textarea>
+
+  <br><br>
+
+<button (click)="save()" style="font-size:20px; margin-right:10px;">
+  Save
+</button>
+
+<button (click)="edit=false" style="font-size:20px;">
+  Cancel
+</button>
+
+</div>
+
+<p style="color:green">{{msg}}</p>
